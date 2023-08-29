@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="edit" title="Opportunity - {bizKey}" xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+    <tabPane selectedTabIndexBinding="selectedTab">
+    	<tab title="Summary">
+    		<component name="_opportunitySummary" />
+    	</tab>
+    	<tab title="Product">
+    		<hbox border="true">
+    			<vbox responsiveWidth="6" percentageWidth="50">
+    				<component name="_opportunityProduct" />
+    			</vbox>
+    			<vbox responsiveWidth="6" percentageWidth="50">
+    				<component name="_opportunityPricing" />
+    			</vbox>
+    		</hbox>
+    	</tab>
+    	<tab title="Interactions" visible="persisted">
+    		<component name="_interactions" />
+    	</tab>
+    </tabPane>
+    
+    <actions>
+        <defaults/>
+        <action className="AddInteraction" displayName="Add" inActionPanel="false" iconStyleClass="fa fa-plus" ></action>
+    </actions>
+    <newParameters/>
+</view>

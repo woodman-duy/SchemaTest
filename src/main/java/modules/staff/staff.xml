@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="http://www.skyve.org/xml/module" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" title="Staff" name="staff" xsi:schemaLocation="http://www.skyve.org/xml/module ../../schemas/module.xsd">
+    <homeRef>list</homeRef>
+    <homeDocument>StaffList</homeDocument>
+    <documents>
+        <document ref="StaffList" defaultQueryName="qStaff"/>
+        <document ref="Contact" moduleRef="admin"/>
+        <document ref="User" moduleRef="admin"/>
+    </documents>
+    <roles>
+        <role name="Staff">
+            <description><![CDATA[Staff Member - A staff member who can work on jobs]]></description>
+            <privileges>
+                <document name="StaffList" permission="CRU_C"/>
+            </privileges>
+            <accesses/>
+        </role>
+        <role name="StaffManager">
+            <description><![CDATA[Staff Manager - Create and manage staff]]></description>
+            <privileges>
+                <document name="StaffList" permission="CRUDC"/>
+            </privileges>
+            <accesses/>
+        </role>
+        <role name="ProjectManager">
+            <description><![CDATA[Project Manager - Create and manage jobs]]></description>
+            <privileges>
+                <document name="StaffList" permission="_RU_C"/>
+            </privileges>
+            <accesses/>
+        </role>
+    </roles>
+    <menu>
+        <edit document="StaffList" name="Staff List">
+            <role name="Staff"/>
+            <role name="StaffManager"/>
+        </edit>
+        <list document="StaffList" name="Staff List">
+            <role name="StaffManager"/>
+        </list>
+    </menu>
+    <queries>
+        <query documentName="StaffList" name="qStaff">
+            <description><![CDATA[All Staff]]></description>
+            <columns>
+                <content display="thumbnail" pixelHeight="90" binding="user.contact.image" pixelWidth="90"/>
+                <column binding="user.contact.name" sortOrder="ascending"/>
+                <column binding="user.contact.mobile" sortOrder="ascending"/>
+                <column binding="dateOfBirth" sortOrder="ascending"/>
+                <column binding="staffId" sortOrder="ascending"/>
+                <column binding="dept" sortOrder="ascending"/>
+                <column binding="bu" sortOrder="ascending"/>
+                <column binding="jobTitle" sortOrder="ascending"/>
+                <column binding="startDate" sortOrder="ascending"/>
+            </columns>
+        </query>
+    </queries>
+</module>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="_accountSummary" title="Account Summary" xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+    <form border="true" borderTitle="Account Summary">
+        <column percentageWidth="30" responsiveWidth="4"/>
+        <column/>
+        <row>
+        	<item>
+                <lookupDescription binding="account" descriptionBinding="bizKey" >
+                	<onPickedHandlers>
+                		<rerender />
+                	</onPickedHandlers>
+                </lookupDescription>
+            </item>
+        </row>
+        <row>
+        	<item showLabel="true" label="Account Manager">
+        		<blurb visible="accountSelected">{account.accountManager}</blurb>
+        	</item>
+        </row>
+       	<row>
+       		<item showLabel="true" label="Account Name">
+       			<blurb visible="accountSelected">{account.accountName}</blurb>
+       		</item>
+       	</row>
+         <row>
+         	<item showLabel="true" label="Email">
+         		<blurb visible="accountSelected">{account.email}</blurb>
+         	</item>
+         </row>
+         <row>
+         	<item showLabel="true" label="Relationship Type">
+         		<blurb visible="accountSelected">{account.relationshipType}</blurb>
+         	</item>
+         </row>
+         <row>
+         	<item showLabel="true" label="Primary Contact">
+         		<blurb visible="accountSelected">{account.primaryContact.bizKey}</blurb>
+         	</item>
+         </row>
+    </form>
+    <actions>
+        <defaults/>
+    </actions>
+    <newParameters/>
+</view>

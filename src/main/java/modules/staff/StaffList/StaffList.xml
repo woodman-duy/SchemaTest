@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="StaffList" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="STA_StaffList"/>
+    <singularAlias>Staff List</singularAlias>
+    <pluralAlias>Staff List</pluralAlias>
+    <iconStyleClass>fa fa-users</iconStyleClass>
+    <bizKey expression="{user.contact.name}"/>
+    <attributes>
+        <association required="true" type="aggregation" name="user">
+            <displayName>User</displayName>
+            <documentName>User</documentName>
+        </association>
+        <enum name="socialTitle">
+            <displayName>Social Title</displayName>
+            <defaultValue>mr</defaultValue>
+            <values>
+                <value name="mr" code="mr" description="Mr"/>
+                <value name="ms" code="ms" description="Ms"/>
+                <value name="mrs" code="mrs" description="Mrs"/>
+                <value name="dr" code="dr" description="Dr"/>
+            </values>
+        </enum>
+        <date required="true" name="dateOfBirth">
+            <displayName>Date Of Birth</displayName>
+        </date>
+        <text required="true" name="staffId">
+            <displayName>Staff Id</displayName>
+            <length>8</length>
+        </text>
+        <date name="issuedDate">
+            <displayName>Issued Date</displayName>
+        </date>
+        <date name="expiredDate">
+            <displayName>Expired Date</displayName>
+        </date>
+        <text name="dept">
+            <displayName>Department</displayName>
+            <length>50</length>
+        </text>
+        <text name="bu">
+            <displayName>Business Unit</displayName>
+            <length>50</length>
+        </text>
+        <text name="jobTitle">
+            <displayName>Job Title</displayName>
+            <length>100</length>
+        </text>
+        <date name="startDate">
+            <displayName>Start Date</displayName>
+        </date>
+        <memo name="bio">
+            <displayName>BIO</displayName>
+            <description><![CDATA[A brief bio]]></description>
+        </memo>
+        <geometry name="staffLocation">
+            <displayName>Staff Location</displayName>
+        </geometry>
+    </attributes>
+    <conditions>
+        <condition name="staffManager">
+            <expression><![CDATA[isUserInRole("staff","StaffManager")]]></expression>
+        </condition>
+    </conditions>
+</document>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="_leadCompanyDetails" title="Lead Company Details" xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+	<form border="true" borderTitle="Lead Company Details">
+        <column percentageWidth="30" responsiveWidth="4"/>
+        <column/>
+        <row>
+        	<item>
+        		<default binding="name" />
+        	</item>
+        </row>
+        <row>
+        	<item>
+        		<default binding="website" />
+        	</item>
+        </row>
+        <row>
+        	<item>
+        		<default binding="line1" />
+        	</item>
+        </row>
+        <row>
+        	<item>
+        		<default binding="line2" />
+        	</item>
+        </row>
+        <row>
+        	<item>
+        		<default binding="suburb" />
+       		</item>
+        </row>
+        <row>
+        	<item>
+        		<default binding="state" />
+        	</item>
+        </row>
+        <row>
+        	<item>
+        		<default binding="postCode" />
+        	</item>
+        </row>
+        <row>
+        	<item>
+        		<spacer />
+        	</item>
+        	<item>
+        		<button action="Geocode"/>
+        	</item>
+        </row>
+        <row>
+        	<item showLabel="false" colspan="2">
+        		<geometryMap binding="companyLocation" pixelHeight="300" pixelWidth="300"/>
+        	</item>
+        </row>
+    </form>
+</view>

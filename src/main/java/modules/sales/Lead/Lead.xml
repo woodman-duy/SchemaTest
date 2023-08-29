@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Lead" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="SAL_Lead"/>
+    <singularAlias>Lead</singularAlias>
+    <pluralAlias>Leads</pluralAlias>
+    <iconStyleClass>fa fa-phone-square</iconStyleClass>
+    <bizKey expression="{contactDetails.lastName}"/>
+    <attributes>
+        <association required="true" type="aggregation" name="contactDetails">
+            <displayName>Contact Details</displayName>
+            <description><![CDATA[The contact details of the lead]]></description>
+            <documentName>ContactDetail</documentName>
+        </association>
+        <text required="true" name="name">
+            <displayName>Company Name</displayName>
+            <description><![CDATA[The company name]]></description>
+            <length>100</length>
+        </text>
+        <text name="website">
+            <displayName>Website</displayName>
+            <description><![CDATA[The company website]]></description>
+            <length>300</length>
+        </text>
+        <text name="line1">
+            <displayName>Line 1</displayName>
+            <description><![CDATA[The company's street]]></description>
+            <length>100</length>
+        </text>
+        <text name="line2">
+            <displayName>Line 2</displayName>
+            <description><![CDATA[The company's street]]></description>
+            <length>100</length>
+        </text>
+        <text name="suburb">
+            <displayName>Suburb</displayName>
+            <description><![CDATA[The company's suburb]]></description>
+            <length>100</length>
+        </text>
+        <text name="state">
+            <displayName>State</displayName>
+            <description><![CDATA[The company's state]]></description>
+            <length>100</length>
+        </text>
+        <text name="postCode">
+            <displayName>Postal Code</displayName>
+            <description><![CDATA[The company's postal code]]></description>
+            <length>10</length>
+        </text>
+        <association required="true" type="aggregation" name="leadType">
+            <displayName>Lead Type</displayName>
+            <description><![CDATA[The type of this lead]]></description>
+            <documentName>Configuration</documentName>
+            <queryName>qLeadType</queryName>
+        </association>
+        <geometry name="companyLocation">
+            <displayName>Company Location</displayName>
+        </geometry>
+        <markup persistent="false" trackChanges="false" audited="false" usage="view" name="progress">
+            <displayName>Progress</displayName>
+        </markup>
+        <integer trackChanges="false" usage="view" name="selectedTab">
+            <displayName>Selected Tab</displayName>
+        </integer>
+    </attributes>
+    <conditions>
+        <condition name="contactSelected">
+            <expression><![CDATA[contactDetails != null]]></expression>
+        </condition>
+        <condition name="hasProgress">
+            <description><![CDATA[True when the progress markup is not blank]]></description>
+            <expression><![CDATA[getProgress() != null]]></expression>
+        </condition>
+        <condition name="Staff">
+            <expression><![CDATA[isUserInRole("sales","Staff")]]></expression>
+        </condition>
+        <condition name="uploadSelected">
+            <expression><![CDATA[getContactDetails() != null && getContactDetails().getInteractionType() != null && getContactDetails().getInteractionType().name() == "upload"]]></expression>
+        </condition>
+    </conditions>
+</document>

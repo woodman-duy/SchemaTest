@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ContactDetail" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="CUS_ContactDetail"/>
+    <singularAlias>Contact Detail</singularAlias>
+    <pluralAlias>Contact Details</pluralAlias>
+    <iconStyleClass>fa fa-users</iconStyleClass>
+    <bizKey expression="{firstName} {lastName}"/>
+    <attributes>
+        <text required="true" name="firstName">
+            <displayName>First Name</displayName>
+            <description><![CDATA[The customer's first name]]></description>
+            <length>20</length>
+        </text>
+        <text required="true" name="lastName">
+            <displayName>Last Name</displayName>
+            <description><![CDATA[The customer's last name]]></description>
+            <length>20</length>
+        </text>
+        <text name="jobTitle">
+            <displayName>Job Title</displayName>
+            <description><![CDATA[The customer's job title]]></description>
+            <length>100</length>
+        </text>
+        <text name="email">
+            <displayName>Email</displayName>
+            <description><![CDATA[The customer's email address]]></description>
+            <length>300</length>
+            <validator regularExpression="^[^@]+@[^@]+$" type="email"/>
+        </text>
+        <text name="mobileNumber">
+            <displayName>Mobile Number</displayName>
+            <description><![CDATA[The customer's mobile number]]></description>
+            <length>20</length>
+        </text>
+        <text name="businessNumber">
+            <displayName>Business Number</displayName>
+            <description><![CDATA[The customer's business number]]></description>
+            <length>20</length>
+        </text>
+        <text name="fax">
+            <displayName>Fax</displayName>
+            <description><![CDATA[The customer's fax number]]></description>
+            <length>20</length>
+        </text>
+        <enum name="method">
+            <displayName>Preferred Method of Contact</displayName>
+            <description><![CDATA[The customer's preferred method of contact]]></description>
+            <values>
+                <value code="Email"/>
+                <value code="Mobile Number"/>
+                <value code="Business Number"/>
+                <value code="Fax"/>
+                <value code="Any"/>
+            </values>
+        </enum>
+        <text name="line1">
+            <displayName>Line 1</displayName>
+            <description><![CDATA[The contact's street]]></description>
+            <length>100</length>
+        </text>
+        <text name="line2">
+            <displayName>Line 2</displayName>
+            <description><![CDATA[The contact's street]]></description>
+            <length>100</length>
+        </text>
+        <text name="suburb">
+            <displayName>Suburb</displayName>
+            <description><![CDATA[The contact's suburb]]></description>
+            <length>100</length>
+        </text>
+        <text name="state">
+            <displayName>State</displayName>
+            <description><![CDATA[The contact's state]]></description>
+            <length>100</length>
+        </text>
+        <text name="postCode">
+            <displayName>Postal Code</displayName>
+            <description><![CDATA[The account's postal code]]></description>
+            <length>10</length>
+        </text>
+        <collection type="composition" name="interactions">
+            <displayName>Interactions</displayName>
+            <documentName>Interaction</documentName>
+            <minCardinality>0</minCardinality>
+            <ordering>
+                <order sort="descending" by="interactionTime"/>
+            </ordering>
+        </collection>
+        <memo persistent="false" name="interactionDescription">
+            <displayName>Description</displayName>
+        </memo>
+        <enum documentRef="Interaction" attributeRef="type" persistent="false" name="interactionType">
+            <displayName>Type</displayName>
+            <values/>
+        </enum>
+        <content persistent="false" name="document">
+            <displayName>Document</displayName>
+        </content>
+        <integer trackChanges="false" usage="view" name="selectedTab">
+            <displayName>Selected Tab</displayName>
+        </integer>
+        <markup persistent="false" trackChanges="false" audited="false" usage="view" name="flowbar">
+            <displayName>Flowbar</displayName>
+        </markup>
+    </attributes>
+    <conditions>
+        <condition name="uploadSelected">
+            <expression><![CDATA[getInteractionType() != null && getInteractionType().name() == "upload"]]></expression>
+        </condition>
+    </conditions>
+</document>

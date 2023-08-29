@@ -1,0 +1,89 @@
+<style>
+	.actionContainer {
+		overflow: hidden;
+		border-left: 4px solid #007ad9;
+		outline: 4px solid white;
+	}
+
+	.actionContainer:hover {
+		border-left: 4px solid #007ad9;
+		background-color: rgba(0, 122, 217, 0.2);
+		cursor: pointer;
+	}
+	
+	.actionIcon {
+		float: left;
+		margin-top: 27px;
+		text-align: center;
+		width: 10%;
+		font-size: 25px;
+	}
+	
+	.actionInfo {
+		float: left;
+		text-align: left; 	
+		width: 70%;
+		margin-left: 10px; 	
+		margin-top: 10px; 
+		line-height: 23px;
+	}
+	
+	.actionTitle {
+		font-weight: bold;
+	}
+	
+	.actionDescription {
+		font-style: italic;
+		color: grey;
+	}
+</style>
+<#if bean.lastUpdated()?? >
+	<#if bean.daysSinceInteraction(lastUpdated()) > 14 >
+		<div class='actionContainer'>
+			<div class='actionIcon'>
+				<span class='fa fa-plus'></span>
+			</div>
+			<div class='actionInfo'>   
+				<span class='actionTitle'>Make New Communication</span>
+				<span>
+					</br>
+					<p class='updateDescription'> You haven't recorded an interaction with ${bean.accountName} for over two weeks, make a new communication and record it as an interaction.</p> 
+				</span>
+			</div>
+		</div>
+	</#if>
+</#if>
+<#assign Util=statics['org.skyve.util.Util'], Opportunity=statics['modules.sales.domain.Opportunity'], Quote=statics['modules.sales.domain.Quote'], Order=statics['modules.sales.domain.Order'], Invoice=statics['modules.sales.domain.Invoice'] >
+<#assign documents={ "Opportunity" : Opportunity, "Quote" : Quote, "Order" : Order, "Invoice" : Invoice }>
+<#list documents as name, document>
+<#if (bean.getRecentDocument(document.MODULE_NAME, document.DOCUMENT_NAME, document.accountPropertyName))??>
+	<#if (bean.lastCreated(name)?? || (bean.daysSinceInteraction(bean.lastCreated(name)) > 30)) >
+		<div class='actionContainer' onclick="location.href='${Util.getDocumentUrl(document.MODULE_NAME, document.DOCUMENT_NAME)}'">
+			<div class='actionIcon'>
+				<span class='${bean.makeIcon(document.DOCUMENT_NAME)}'></span>
+			</div>
+			<div class='actionInfo'>
+				<span class='actionTitle'>Create A New ${name}</span>
+				<span>
+					</br>
+					<p class='actionDescription'>You have not created a new ${name} for ${bean.getAccount().getAccountName()} recently, click here to create a new one and save it to this account.</p>
+				</span>
+			</div>
+		</div>
+	</#if>
+<#else>
+	<div class='actionContainer' onclick="location.href='${Util.getDocumentUrl(document.MODULE_NAME, document.DOCUMENT_NAME)}'">
+		<div class='actionIcon'>
+			<span class='${bean.makeIcon(document.DOCUMENT_NAME)}'></span>
+		</div>
+		<div class='actionInfo'>    
+			<span class='actionTitle'>Make New ${name}</span>
+			<span>
+				</br>
+				<p class='actionDescription'> This account does not yet have an ${name}, click here to make a new one.</p>
+			</span>
+		</div>
+	</div>
+</#if>
+</#list>
+		

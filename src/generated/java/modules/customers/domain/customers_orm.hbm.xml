@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+
+	<typedef name="OptimisticLock" class="org.skyve.impl.domain.types.OptimisticLockUserType" />
+	<typedef name="Decimal2" class="org.skyve.impl.domain.types.Decimal2UserType" />
+	<typedef name="Decimal5" class="org.skyve.impl.domain.types.Decimal5UserType" />
+	<typedef name="Decimal10" class="org.skyve.impl.domain.types.Decimal10UserType" />
+	<typedef name="DateOnly" class="org.skyve.impl.domain.types.DateOnlyUserType" />
+	<typedef name="DateTime" class="org.skyve.impl.domain.types.DateTimeUserType" />
+	<typedef name="TimeOnly" class="org.skyve.impl.domain.types.TimeOnlyUserType" />
+	<typedef name="Timestamp" class="org.skyve.impl.domain.types.TimestampUserType" />
+	<typedef name="Enum" class="org.skyve.impl.domain.types.EnumUserType" />
+	<class name="modules.customers.Account.AccountExtension" table="CUS_Account" entity-name="customersAccount">
+		<id name="bizId" length="36" />
+		<version name="bizVersion" unsaved-value="null" />
+		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+		<property name="bizKey" length="1024" not-null="true" />
+		<property name="bizCustomer" length="50" not-null="true" />
+		<property name="bizFlagComment" length="1024" />
+		<property name="bizDataGroupId" length="36" />
+		<property name="bizUserId" length="36" not-null="true" />
+		<many-to-one name="currentUser" entity-name="adminUser" column="currentUser_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_CUS_Account_currentUser"/>
+		<property name="accountManager" length="200" />
+		<property name="accountName" length="200" />
+		<property name="email" length="300" />
+		<property name="website" length="300" />
+		<property name="phone" length="20" />
+		<property name="fax" length="20" />
+		<property name="relationshipType" length="8">
+			<type name="Enum">
+				<param name="enumClass">modules.customers.domain.Account$RelationshipType</param>
+			</type>
+		</property>
+		<property name="startDate" type="DateOnly" />
+		<property name="line1" length="100" />
+		<property name="line2" length="100" />
+		<property name="suburb" length="100" />
+		<property name="state" length="100" />
+		<property name="postCode" length="10" />
+		<property name="location" />
+		<many-to-one name="primaryContact" entity-name="customersContactDetail" column="primaryContact_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_CUS_Account_primaryContact"/>
+		<bag name="interactions" table="CUS_Account_interactions" cascade="all-delete-orphan">
+			<key column="owner_id" foreign-key="FK_CUS_Account_interactions_owner_id" />
+			<many-to-many entity-name="customersInteraction" order-by="interactionTime desc" foreign-key="FK_CUS_Account_interactions_element_id" column="element_id" />
+		</bag>
+		<property name="selectedTab" />
+		<property name="document" length="36" />
+		<filter name="customersAccountNoneFilter" condition="1=0"/>
+		<filter name="customersAccountCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="customersAccountDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="customersAccountUserIdFilter" condition="bizUserId=:userIdParam"/>
+	</class>
+
+	<class name="modules.customers.ContactDetail.ContactDetailExtension" table="CUS_ContactDetail" entity-name="customersContactDetail">
+		<id name="bizId" length="36" />
+		<version name="bizVersion" unsaved-value="null" />
+		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+		<property name="bizKey" length="1024" not-null="true" />
+		<property name="bizCustomer" length="50" not-null="true" />
+		<property name="bizFlagComment" length="1024" />
+		<property name="bizDataGroupId" length="36" />
+		<property name="bizUserId" length="36" not-null="true" />
+		<property name="firstName" length="20" />
+		<property name="lastName" length="20" />
+		<property name="jobTitle" length="100" />
+		<property name="email" length="300" />
+		<property name="mobileNumber" length="20" />
+		<property name="businessNumber" length="20" />
+		<property name="fax" length="20" />
+		<property name="method" length="15">
+			<type name="Enum">
+				<param name="enumClass">modules.customers.domain.ContactDetail$Method</param>
+			</type>
+		</property>
+		<property name="line1" length="100" />
+		<property name="line2" length="100" />
+		<property name="suburb" length="100" />
+		<property name="state" length="100" />
+		<property name="postCode" length="10" />
+		<bag name="interactions" table="CUS_ContactDetail_interactions" cascade="all-delete-orphan">
+			<key column="owner_id" foreign-key="FK_CUS_ContactDetail_interactions_owner_id" />
+			<many-to-many entity-name="customersInteraction" order-by="interactionTime desc" foreign-key="FK_CUS_ContactDetail_interactions_element_id" column="element_id" />
+		</bag>
+		<property name="selectedTab" />
+		<filter name="customersContactDetailNoneFilter" condition="1=0"/>
+		<filter name="customersContactDetailCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="customersContactDetailDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="customersContactDetailUserIdFilter" condition="bizUserId=:userIdParam"/>
+	</class>
+
+	<class name="modules.customers.Interaction.InteractionExtension" table="CUS_Interaction" entity-name="customersInteraction">
+		<id name="bizId" length="36" />
+		<version name="bizVersion" unsaved-value="null" />
+		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+		<property name="bizKey" length="1024" not-null="true" />
+		<property name="bizCustomer" length="50" not-null="true" />
+		<property name="bizFlagComment" length="1024" />
+		<property name="bizDataGroupId" length="36" />
+		<property name="bizUserId" length="36" not-null="true" />
+		<property name="title" length="50" />
+		<many-to-one name="user" entity-name="adminUser" column="user_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_CUS_Interaction_user"/>
+		<property name="description" type="text" />
+		<property name="type" length="12">
+			<type name="Enum">
+				<param name="enumClass">modules.customers.domain.Interaction$Type</param>
+			</type>
+		</property>
+		<property name="interactionTime" type="DateTime" />
+		<property name="document" length="36" />
+		<filter name="customersInteractionNoneFilter" condition="1=0"/>
+		<filter name="customersInteractionCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="customersInteractionDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="customersInteractionUserIdFilter" condition="bizUserId=:userIdParam"/>
+	</class>
+
+	<filter-def name="customersAccountNoneFilter" />
+	<filter-def name="customersAccountCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="customersAccountDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="customersAccountUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="customersContactDetailNoneFilter" />
+	<filter-def name="customersContactDetailCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="customersContactDetailDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="customersContactDetailUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="customersInteractionNoneFilter" />
+	<filter-def name="customersInteractionCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="customersInteractionDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="customersInteractionUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+</hibernate-mapping>

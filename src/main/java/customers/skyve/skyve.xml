@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customer xmlns="http://www.skyve.org/xml/customer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="skyve" xsi:schemaLocation="http://www.skyve.org/xml/customer ../../schemas/customer.xsd">
+    <uiResources logo="logo.png"/>
+    <defaultDateConverter>DD_MMM_YYYY</defaultDateConverter>
+    <defaultTimeConverter>HH24_MI</defaultTimeConverter>
+    <defaultDateTimeConverter>DD_MMM_YYYY_HH24_MI</defaultDateTimeConverter>
+    <defaultTimestampConverter>DD_MMM_YYYY_HH24_MI_SS</defaultTimestampConverter>
+    <modules homeModule="products">
+        <module name="admin"/>
+        <module name="products"/>
+        <module name="sales"/>
+        <module name="customers"/>
+        <module name="staff"/>
+    </modules>
+    <interceptors>
+        <interceptor className="modules.admin.RDBMSAuditInterceptor"/>
+    </interceptors>
+</customer>

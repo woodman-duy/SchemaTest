@@ -1,0 +1,91 @@
+<style>
+	.flowbar-wrapper {
+	  	width: 100%;
+	  	padding-top: 10px;
+	  	padding-bottom: 5px;
+	}
+	
+	.flowbar li {
+	  	list-style-type: none;
+	  	width: 14%;
+	  	float: left;
+	  	font-size: 12px;
+	  	position: relative;
+	  	text-align: center;
+	}
+	
+	.flowbar li:before {
+		width: 50px;
+	  	height: 50px;
+	  	content: "";
+	  	line-height: 50px;
+	  	border: 2px solid #7d7d7d;
+	  	display: block;
+	  	text-align: center;
+	  	margin: 0 auto 3px auto;
+	  	border-radius: 50%;
+	  	position: relative;
+	  	z-index: 2;
+	  	background: #fff;
+	  	background-size: 60%;
+	  	cursor: pointer;
+	}
+	
+	.flowbar li:after {
+	    width: 100%;
+	    height: 5px;
+	    content: '';
+	    position: absolute;
+	    background-color: #7d7d7d;
+	    top: 24px;
+	    left: -50%;
+	    z-index: 0;
+	}
+	.flowbar li:first-child:after {
+	    content: none;
+	}
+	
+	.flowbar li.current {
+	    color: #007ad9;
+	    font-weight: bold;  
+	}
+	.flowbar li.current:before {
+	    border-color: #007ad9;
+	    background: #007ad9;
+	    background-size: 60%;
+	    font-family: "FontAwesome";
+	    content: "\f078";
+		color: white;
+		font-size: 20px;    
+	}
+	.flowbar li.notCurrent:before {
+	    font-family: "FontAwesome";
+	    content: "\f067";
+		color: #7d7d7d;
+		font-size: 20px;    
+	}
+	
+	.flowbar li.current + li:after {
+	    background-color: #007ad9;
+	}
+	
+	.flowbar li:hover{
+		color: red;
+	}
+</style>	
+
+<#assign Util=statics['org.skyve.util.Util'], Contact=statics['modules.customers.domain.ContactDetail'], Account=statics['modules.customers.domain.Account'], Opportunity=statics['modules.sales.domain.Opportunity'], Quote=statics['modules.sales.domain.Quote'], Order=statics['modules.sales.domain.Order'], Invoice=statics['modules.sales.domain.Invoice']>
+<#assign documents = { "Opportunity" : Opportunity, "Quote" : Quote, "Order" : Order, "Invoice" : Invoice } >
+<div class="flowbar-wrapper">
+	<ul class="flowbar" style="width: 116%;">
+		<li class="current" onclick="location.href='${Util.getDocumentUrl(Contact.MODULE_NAME, Contact.DOCUMENT_NAME, bean.getAccount().getPrimaryContact().getBizId())}'"> Contact Details </li>
+		<li class="current" onclick="location.href='${Util.getDocumentUrl(Account.MODULE_NAME, Account.DOCUMENT_NAME, bean.getAccount().getBizId())}'"> Account </li>
+		<#list documents as name, document>
+			<#if (bean.getRecentDocument(document.MODULE_NAME, document.DOCUMENT_NAME, document.accountPropertyName))??>
+				<li class="current" onclick="location.href='${Util.getDocumentUrl(document.MODULE_NAME, document.DOCUMENT_NAME, bean.getRecentDocument(document.MODULE_NAME, document.DOCUMENT_NAME, document.accountPropertyName).getBizId())}'"> ${name} </li>
+			<#else>
+				<li class="notCurrent" onclick="location.href='${Util.getDocumentUrl(document.MODULE_NAME, document.DOCUMENT_NAME)}'"> ${name} </li>
+			</#if>
+		</#list>
+	</ul>
+</div>

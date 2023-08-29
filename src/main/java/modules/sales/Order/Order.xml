@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Order" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="SAL_Order"/>
+    <singularAlias>Order</singularAlias>
+    <pluralAlias>Orders</pluralAlias>
+    <iconStyleClass>fa fa-file-text</iconStyleClass>
+    <bizKey expression="{orderId}"/>
+    <attributes>
+        <text required="true" name="orderId">
+            <displayName>Order ID</displayName>
+            <description><![CDATA[The ID for this order]]></description>
+            <length>8</length>
+        </text>
+        <text required="true" name="name">
+            <displayName>Order Name</displayName>
+            <description><![CDATA[The name of the order]]></description>
+            <length>200</length>
+        </text>
+        <memo name="description">
+            <displayName>Description</displayName>
+            <description><![CDATA[A description of the order]]></description>
+        </memo>
+        <association required="true" type="aggregation" name="status">
+            <displayName>Order Status</displayName>
+            <description><![CDATA[The current status of this order]]></description>
+            <documentName>Configuration</documentName>
+            <queryName>qOrderStatus</queryName>
+        </association>
+        <date name="requested">
+            <displayName>Requested Delivery Date</displayName>
+            <description><![CDATA[The requested date of delivery for the order]]></description>
+        </date>
+        <date name="fulfilled">
+            <displayName>Fulfillment Date</displayName>
+            <description><![CDATA[The date the order is fulfilled]]></description>
+        </date>
+        <association type="aggregation" name="product">
+            <displayName>Product</displayName>
+            <description><![CDATA[The product of the order]]></description>
+            <documentName>ProductInfo</documentName>
+        </association>
+        <longInteger required="true" name="total">
+            <displayName>Provisional Total</displayName>
+            <description><![CDATA[The provisional total for this order]]></description>
+        </longInteger>
+        <association required="true" type="aggregation" name="account">
+            <displayName>Account</displayName>
+            <description><![CDATA[The account for the order]]></description>
+            <documentName>Account</documentName>
+        </association>
+        <association required="true" type="aggregation" name="opportunity">
+            <displayName>Opportunity</displayName>
+            <description><![CDATA[The opportunity for the order]]></description>
+            <documentName>Opportunity</documentName>
+        </association>
+        <association required="true" type="aggregation" name="quote">
+            <displayName>Quote</displayName>
+            <description><![CDATA[The quote for the order]]></description>
+            <documentName>Quote</documentName>
+        </association>
+        <integer trackChanges="false" usage="view" name="selectedTab">
+            <displayName>Selected Tab</displayName>
+        </integer>
+    </attributes>
+    <conditions>
+        <condition name="opportunitySelected">
+            <expression><![CDATA[opportunity != null]]></expression>
+        </condition>
+        <condition name="quoteSelected">
+            <expression><![CDATA[quote != null]]></expression>
+        </condition>
+        <condition name="uploadSelected">
+            <expression><![CDATA[getAccount() != null && getAccount().getInteractionType() != null && getAccount().getInteractionType().name() == "upload"]]></expression>
+        </condition>
+    </conditions>
+</document>

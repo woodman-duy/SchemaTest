@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+
+	<typedef name="OptimisticLock" class="org.skyve.impl.domain.types.OptimisticLockUserType" />
+	<typedef name="Decimal2" class="org.skyve.impl.domain.types.Decimal2UserType" />
+	<typedef name="Decimal5" class="org.skyve.impl.domain.types.Decimal5UserType" />
+	<typedef name="Decimal10" class="org.skyve.impl.domain.types.Decimal10UserType" />
+	<typedef name="DateOnly" class="org.skyve.impl.domain.types.DateOnlyUserType" />
+	<typedef name="DateTime" class="org.skyve.impl.domain.types.DateTimeUserType" />
+	<typedef name="TimeOnly" class="org.skyve.impl.domain.types.TimeOnlyUserType" />
+	<typedef name="Timestamp" class="org.skyve.impl.domain.types.TimestampUserType" />
+	<typedef name="Enum" class="org.skyve.impl.domain.types.EnumUserType" />
+	<class name="modules.staff.domain.StaffList" table="STA_StaffList" entity-name="staffStaffList">
+		<id name="bizId" length="36" />
+		<version name="bizVersion" unsaved-value="null" />
+		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+		<property name="bizKey" length="1024" not-null="true" />
+		<property name="bizCustomer" length="50" not-null="true" />
+		<property name="bizFlagComment" length="1024" />
+		<property name="bizDataGroupId" length="36" />
+		<property name="bizUserId" length="36" not-null="true" />
+		<many-to-one name="user" entity-name="adminUser" column="user_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_STA_StaffList_user"/>
+		<property name="socialTitle" length="3">
+			<type name="Enum">
+				<param name="enumClass">modules.staff.domain.StaffList$SocialTitle</param>
+			</type>
+		</property>
+		<property name="dateOfBirth" type="DateOnly" />
+		<property name="staffId" length="8" />
+		<property name="issuedDate" type="DateOnly" />
+		<property name="expiredDate" type="DateOnly" />
+		<property name="dept" length="50" />
+		<property name="bu" length="50" />
+		<property name="jobTitle" length="100" />
+		<property name="startDate" type="DateOnly" />
+		<property name="bio" type="text" />
+		<property name="staffLocation" />
+		<filter name="staffStaffListNoneFilter" condition="1=0"/>
+		<filter name="staffStaffListCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="staffStaffListDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="staffStaffListUserIdFilter" condition="bizUserId=:userIdParam"/>
+	</class>
+
+	<filter-def name="staffStaffListNoneFilter" />
+	<filter-def name="staffStaffListCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="staffStaffListDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="staffStaffListUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+</hibernate-mapping>

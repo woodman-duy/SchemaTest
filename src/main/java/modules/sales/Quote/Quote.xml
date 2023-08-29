@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Quote" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="SAL_Quote"/>
+    <singularAlias>Quote</singularAlias>
+    <pluralAlias>Quotes</pluralAlias>
+    <iconStyleClass>fa fa-files-o</iconStyleClass>
+    <bizKey expression="{quoteId}"/>
+    <attributes>
+        <text required="true" name="name">
+            <displayName>Quote Name</displayName>
+            <description><![CDATA[The name of the quote]]></description>
+            <length>200</length>
+        </text>
+        <text required="true" name="quoteId">
+            <displayName>Quote ID</displayName>
+            <description><![CDATA[The id number of the quote]]></description>
+            <length>8</length>
+        </text>
+        <association required="true" type="aggregation" name="opportunity">
+            <displayName>Opportunity</displayName>
+            <description><![CDATA[The opportunity of this quote]]></description>
+            <documentName>Opportunity</documentName>
+        </association>
+        <association required="true" type="aggregation" name="account">
+            <displayName>Account</displayName>
+            <description><![CDATA[The account for this quote]]></description>
+            <documentName>Account</documentName>
+        </association>
+        <date name="expireDate">
+            <displayName>Quote Expire Date</displayName>
+            <description><![CDATA[The date the quote expires]]></description>
+        </date>
+        <association required="true" type="aggregation" name="status">
+            <displayName>Quote Status</displayName>
+            <description><![CDATA[The status of the quote]]></description>
+            <documentName>Configuration</documentName>
+            <queryName>qQuoteStatus</queryName>
+        </association>
+        <text name="statusReason">
+            <displayName>Status Reason</displayName>
+            <description><![CDATA[The reason for the current status of the quote]]></description>
+            <length>200</length>
+        </text>
+        <memo name="description">
+            <displayName>Description</displayName>
+            <description><![CDATA[A description of the quote]]></description>
+        </memo>
+        <longInteger required="true" name="total">
+            <displayName>Provisional Total</displayName>
+            <description><![CDATA[The provisional total for this opportunity]]></description>
+        </longInteger>
+        <text name="paymentTerms">
+            <displayName>Payment Terms</displayName>
+            <description><![CDATA[The payment terms of the quote]]></description>
+            <length>200</length>
+        </text>
+        <text name="freightTerms">
+            <displayName>Freight Terms</displayName>
+            <description><![CDATA[The freight terms of the quote]]></description>
+            <length>200</length>
+        </text>
+        <text name="streetBill">
+            <displayName>Bill To Street</displayName>
+            <description><![CDATA[The quote's billing street and number]]></description>
+            <length>200</length>
+        </text>
+        <text name="cityBill">
+            <displayName>Bill To City</displayName>
+            <description><![CDATA[The quote's billing city]]></description>
+            <length>100</length>
+        </text>
+        <text name="stateBill">
+            <displayName>Bill To State or Province</displayName>
+            <description><![CDATA[The quote's billing state or province]]></description>
+            <length>100</length>
+        </text>
+        <text name="postCodeBill">
+            <displayName>Bill To ZIP or Postal Code</displayName>
+            <description><![CDATA[The quote's billing ZIP or postal code]]></description>
+            <length>10</length>
+        </text>
+        <text name="countryBill">
+            <displayName>Bill To Country or Region</displayName>
+            <description><![CDATA[The quote's billing country or region]]></description>
+            <length>100</length>
+        </text>
+        <text name="shippingMethod">
+            <displayName>Shipping Method</displayName>
+            <description><![CDATA[The shipping method for this quote]]></description>
+            <length>200</length>
+        </text>
+        <text name="streetShip">
+            <displayName>Ship To Street</displayName>
+            <description><![CDATA[The quote's shipping street and number]]></description>
+            <length>200</length>
+        </text>
+        <text name="cityShip">
+            <displayName>Ship To City</displayName>
+            <description><![CDATA[The quote's shipping city]]></description>
+            <length>100</length>
+        </text>
+        <text name="stateShip">
+            <displayName>Ship To State or Province</displayName>
+            <description><![CDATA[The quote's shipping state or province]]></description>
+            <length>100</length>
+        </text>
+        <text name="postCodeShip">
+            <displayName>Ship To ZIP or Postal Code</displayName>
+            <description><![CDATA[The quote's shipping ZIP or postal code]]></description>
+            <length>10</length>
+        </text>
+        <text name="countryShip">
+            <displayName>Ship To Country or Region</displayName>
+            <description><![CDATA[The quote's shipping country or region]]></description>
+            <length>100</length>
+        </text>
+        <integer trackChanges="false" usage="view" name="selectedTab">
+            <displayName>Selected Tab</displayName>
+        </integer>
+    </attributes>
+    <conditions>
+        <condition name="opportunitySelected">
+            <expression><![CDATA[opportunity != null]]></expression>
+        </condition>
+        <condition name="uploadSelected">
+            <expression><![CDATA[getAccount() != null && getAccount().getInteractionType() != null && getAccount().getInteractionType().name() == "upload"]]></expression>
+        </condition>
+    </conditions>
+</document>

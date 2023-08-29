@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="_leadSummary" title="Lead Summary" xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+    <form border="true" borderTitle="Lead Summary">
+        <column percentageWidth="30" responsiveWidth="4"/>
+        <column/>
+        <row>
+        	<item>
+                <lookupDescription binding="lead" descriptionBinding="bizKey">
+                	<onPickedHandlers>
+                		<rerender />
+                	</onPickedHandlers>
+                </lookupDescription>
+            </item>
+        </row>
+        <row>
+        	<item showLabel="true" label="Lead">
+        		<blurb visible="leadSelected">{lead.bizKey}</blurb>
+        	</item>
+        </row>
+       	<row>
+       		<item showLabel="true" label="Company Name">
+       			<blurb visible="leadSelected">{lead.name}</blurb>
+       		</item>
+       	</row>
+         <row>
+         	<item showLabel="true" label="Website">
+         		<blurb visible="leadSelected">{lead.website}</blurb>
+         	</item>
+         </row>
+         <row>
+         	<item showLabel="true" label="Contact">
+				<blurb visible="leadSelected">{lead.contactDetails.bizKey}</blurb>
+         	</item>
+         </row>
+         <row>
+         	<item showLabel="true" label="Lead Type">
+         		<blurb visible="leadSelected">{lead.leadType.field}</blurb>
+         	</item>
+         </row>
+    </form>
+    <actions>
+        <defaults/>
+    </actions>
+    <newParameters/>
+</view>

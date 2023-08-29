@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ProcessLifeCycle" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="SAL_ProcessLifeCycle"/>
+    <singularAlias>Process Life Cycle</singularAlias>
+    <pluralAlias>Process Life Cycles</pluralAlias>
+    <iconStyleClass>fa fa-circle-o-notch</iconStyleClass>
+    <bizKey expression="{processId}"/>
+    <attributes>
+        <text required="true" name="processId">
+            <displayName>Process Life Cycle ID</displayName>
+            <description><![CDATA[The ID for this process life cycle]]></description>
+            <length>8</length>
+        </text>
+        <association required="true" type="aggregation" name="status">
+            <displayName>Process Status</displayName>
+            <description><![CDATA[The current status of the process life cycle]]></description>
+            <documentName>Configuration</documentName>
+            <queryName>qProcessStatus</queryName>
+        </association>
+        <date name="startDate">
+            <displayName>Start Date</displayName>
+            <description><![CDATA[The date this life cycle began]]></description>
+        </date>
+        <date name="endDate">
+            <displayName>End Date</displayName>
+            <description><![CDATA[The end date for this life cycle]]></description>
+        </date>
+        <association type="aggregation" name="contact">
+            <displayName>Contact</displayName>
+            <documentName>ContactDetail</documentName>
+        </association>
+        <association type="aggregation" name="lead">
+            <displayName>Lead</displayName>
+            <documentName>Lead</documentName>
+        </association>
+        <association type="aggregation" name="account">
+            <displayName>Account</displayName>
+            <documentName>Account</documentName>
+            <queryName>qAccount</queryName>
+        </association>
+        <association type="aggregation" name="opportunity">
+            <displayName>Opportunity</displayName>
+            <documentName>Opportunity</documentName>
+        </association>
+        <association type="aggregation" name="quote">
+            <displayName>Quote</displayName>
+            <documentName>Quote</documentName>
+        </association>
+        <association type="aggregation" name="order">
+            <displayName>Order</displayName>
+            <documentName>Order</documentName>
+        </association>
+        <association type="aggregation" name="invoice">
+            <displayName>Invoice</displayName>
+            <documentName>Invoice</documentName>
+        </association>
+        <markup persistent="false" trackChanges="false" audited="false" usage="view" name="flowbar">
+            <displayName>Flowbar</displayName>
+        </markup>
+    </attributes>
+    <conditions>
+        <condition name="contactSelected">
+            <expression><![CDATA[contact != null]]></expression>
+        </condition>
+        <condition name="leadSelected">
+            <expression><![CDATA[lead != null]]></expression>
+        </condition>
+        <condition name="accountSelected">
+            <expression><![CDATA[account != null]]></expression>
+        </condition>
+        <condition name="opportunitySelected">
+            <expression><![CDATA[opportunity != null]]></expression>
+        </condition>
+        <condition name="quoteSelected">
+            <expression><![CDATA[quote != null]]></expression>
+        </condition>
+        <condition name="orderSelected">
+            <expression><![CDATA[order != null]]></expression>
+        </condition>
+        <condition name="invoiceSelected">
+            <expression><![CDATA[invoice != null]]></expression>
+        </condition>
+    </conditions>
+</document>

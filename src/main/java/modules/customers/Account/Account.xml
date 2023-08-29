@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Account" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="CUS_Account"/>
+    <singularAlias>Account</singularAlias>
+    <pluralAlias>Accounts</pluralAlias>
+    <iconStyleClass>fa fa-book</iconStyleClass>
+    <bizKey expression="{accountName}"/>
+    <attributes>
+        <association type="aggregation" name="currentUser">
+            <displayName>Current User</displayName>
+            <documentName>User</documentName>
+        </association>
+        <text required="true" name="accountManager">
+            <displayName>Account Manager</displayName>
+            <description><![CDATA[The manager of this account]]></description>
+            <length>200</length>
+        </text>
+        <text required="true" name="accountName">
+            <displayName>Account Name</displayName>
+            <description><![CDATA[The account name]]></description>
+            <length>200</length>
+        </text>
+        <text required="true" name="email">
+            <displayName>Email</displayName>
+            <description><![CDATA[The account email address]]></description>
+            <length>300</length>
+            <validator regularExpression="^[^@]+@[^@]+$" type="email"/>
+        </text>
+        <text name="website">
+            <displayName>Website</displayName>
+            <description><![CDATA[The account website]]></description>
+            <length>300</length>
+        </text>
+        <text name="phone">
+            <displayName>Phone</displayName>
+            <description><![CDATA[The account phone number]]></description>
+            <length>20</length>
+        </text>
+        <text name="fax">
+            <displayName>Fax</displayName>
+            <description><![CDATA[The account fax number]]></description>
+            <length>20</length>
+        </text>
+        <enum name="relationshipType">
+            <displayName>Relationship Type</displayName>
+            <description><![CDATA[The type of relationship for the account]]></description>
+            <values>
+                <value code="Customer"/>
+                <value code="Supplier"/>
+                <value code="Other"/>
+            </values>
+        </enum>
+        <date name="startDate">
+            <displayName>Start Date</displayName>
+            <description><![CDATA[The date the account began]]></description>
+        </date>
+        <text name="line1">
+            <displayName>Line 1</displayName>
+            <description><![CDATA[The account's street]]></description>
+            <length>100</length>
+        </text>
+        <text name="line2">
+            <displayName>Line 2</displayName>
+            <description><![CDATA[The account's street]]></description>
+            <length>100</length>
+        </text>
+        <text name="suburb">
+            <displayName>Suburb</displayName>
+            <description><![CDATA[The account's suburb]]></description>
+            <length>100</length>
+        </text>
+        <text name="state">
+            <displayName>State</displayName>
+            <description><![CDATA[The account's state]]></description>
+            <length>100</length>
+        </text>
+        <text name="postCode">
+            <displayName>Postal Code</displayName>
+            <description><![CDATA[The account's postal code]]></description>
+            <length>10</length>
+        </text>
+        <geometry name="location">
+            <displayName>Location</displayName>
+        </geometry>
+        <association required="true" type="aggregation" name="primaryContact">
+            <displayName>Primary Contact</displayName>
+            <description><![CDATA[The account's primary contact]]></description>
+            <documentName>ContactDetail</documentName>
+        </association>
+        <collection type="composition" name="interactions">
+            <displayName>Interactions</displayName>
+            <documentName>Interaction</documentName>
+            <minCardinality>0</minCardinality>
+            <ordering>
+                <order sort="descending" by="interactionTime"/>
+            </ordering>
+        </collection>
+        <integer trackChanges="false" usage="view" name="selectedTab">
+            <displayName>Selected Tab</displayName>
+            <validator max="2" min="0"/>
+        </integer>
+        <memo persistent="false" name="interactionDescription">
+            <displayName>Description</displayName>
+        </memo>
+        <enum documentRef="Interaction" attributeRef="type" persistent="false" name="interactionType">
+            <displayName>Type</displayName>
+            <values/>
+        </enum>
+        <content name="document">
+            <displayName>Document</displayName>
+        </content>
+    </attributes>
+    <conditions>
+        <condition name="hasCurrent">
+            <expression><![CDATA[primaryContact != null]]></expression>
+        </condition>
+        <condition name="uploadSelected">
+            <expression><![CDATA[getInteractionType() != null && getInteractionType().name() == "upload"]]></expression>
+        </condition>
+    </conditions>
+</document>

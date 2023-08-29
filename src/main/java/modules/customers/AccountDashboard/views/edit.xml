@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns="http://www.skyve.org/xml/view" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="edit" title="Account Dashboard - {bizKey}" xsi:schemaLocation="http://www.skyve.org/xml/view ../../../../schemas/view.xsd">
+    <form responsiveWidth="10" percentageWidth="60" border="false" >
+        <column percentageWidth="30" responsiveWidth="4"/>
+        <column/>
+        <row>
+            <item>
+                <lookupDescription descriptionBinding="accountName" binding="account" >
+                	<onPickedHandlers>
+                		<rerender clientValidation="false"/>
+                	</onPickedHandlers>
+                </lookupDescription>
+            </item>
+        </row>
+    </form>
+    
+    <component name="_flowbar" visible="accountSelected"/>
+    
+    <hbox visible="accountSelected">
+    	<vbox responsiveWidth="6" percentageWidth="50" borderTitle="Recent Activity" border="true">
+			<chart type="line" modelName="RecentActivityModel" />
+    	</vbox>
+    	<vbox responsiveWidth="6" percentageWidth="50" border="true" borderTitle="Status">
+    		<component name="_status" />
+    	</vbox>
+    </hbox>
+    
+    <hbox visible="accountSelected">
+    	<vbox responsiveWidth="6" percentageWidth="50">
+    		<component name="_suggestedActions" />
+    	</vbox>
+    	<vbox responsiveWidth="6" percentageWidth="50" border="true" borderTitle="Sales History">
+    		<chart type="bar" modelName="SalesHistoryModel" />
+    	</vbox>
+    </hbox>
+    
+    <hbox visible="accountSelected">
+    	
+    	<vbox responsiveWidth="6" percentageWidth="50" >
+    		<component name="_accountDetails" />
+    		<vbox border="true" borderTitle="Location">
+    			<component name="_accountLocation" />
+    		</vbox>
+    	</vbox>
+    	<vbox responsiveWidth="6" percentageWidth="50">
+    		<component name="_interactions" />		
+    	</vbox>
+	
+    </hbox>
+    
+    <actions>
+        <action className="AddInteraction" displayName="Add" inActionPanel="false" iconStyleClass="fa fa-plus" />
+    </actions>
+    <newParameters/>
+</view>

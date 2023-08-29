@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ProductInfo" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="PRO_ProductInfo"/>
+    <singularAlias>Product Info</singularAlias>
+    <pluralAlias>Product Info</pluralAlias>
+    <iconStyleClass>fa fa-info-circle</iconStyleClass>
+    <bizKey expression="{name}"/>
+    <attributes>
+        <text required="true" name="name">
+            <displayName>Product Name</displayName>
+            <description><![CDATA[Product name]]></description>
+            <length>100</length>
+        </text>
+        <text required="true" name="productId">
+            <displayName>Product Id</displayName>
+            <description><![CDATA[The products id number]]></description>
+            <length>8</length>
+        </text>
+        <memo name="description">
+            <displayName>Description</displayName>
+            <description><![CDATA[A description of the product]]></description>
+        </memo>
+        <date name="validFrom">
+            <displayName>Valid From</displayName>
+            <description><![CDATA[The date the product is valid]]></description>
+        </date>
+        <date name="validTo">
+            <displayName>Valid To</displayName>
+            <description><![CDATA[The expiration date of the product]]></description>
+        </date>
+        <association required="true" type="aggregation" name="productUnitGroup">
+            <displayName>Product Unit Group</displayName>
+            <description><![CDATA[The unit group of the product]]></description>
+            <documentName>ProductUnitGroup</documentName>
+        </association>
+    </attributes>
+    <conditions>
+        <condition name="hasCurrentGroup">
+            <expression><![CDATA[productUnitGroup != null]]></expression>
+        </condition>
+    </conditions>
+</document>

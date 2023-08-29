@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="AccountDashboard" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <singularAlias>Account Dashboard</singularAlias>
+    <pluralAlias>Account Dashboards</pluralAlias>
+    <iconStyleClass>fa fa-area-chart</iconStyleClass>
+    <bizKey expression="{account.accountName}"/>
+    <attributes>
+        <association type="aggregation" name="account">
+            <displayName>Account</displayName>
+            <documentName>Account</documentName>
+            <queryName>qCurrentAccounts</queryName>
+        </association>
+        <collection type="aggregation" persistent="false" name="interactions">
+            <displayName>Interactions</displayName>
+            <documentName>Interaction</documentName>
+            <minCardinality>0</minCardinality>
+            <ordering>
+                <order sort="descending" by="interactionTime"/>
+            </ordering>
+        </collection>
+        <integer name="noOpportunity">
+            <displayName>Number of Opportunities</displayName>
+            <transient>true</transient>
+            <defaultValue>0</defaultValue>
+        </integer>
+        <integer name="noQuote">
+            <displayName>Number of Quotes</displayName>
+            <transient>true</transient>
+            <defaultValue>0</defaultValue>
+        </integer>
+        <integer name="noOrder">
+            <displayName>Number of Orders</displayName>
+            <transient>true</transient>
+            <defaultValue>0</defaultValue>
+        </integer>
+        <integer name="noInvoice">
+            <displayName>Number of Invoices</displayName>
+            <transient>true</transient>
+            <defaultValue>0</defaultValue>
+        </integer>
+        <text name="dateOpportunity">
+            <displayName>Date Opportunity Updated</displayName>
+            <length>100</length>
+        </text>
+        <text name="dateQuote">
+            <displayName>Date Quote Updated</displayName>
+            <length>100</length>
+        </text>
+        <text name="dateOrder">
+            <displayName>Date Order Updated</displayName>
+            <length>100</length>
+        </text>
+        <text name="dateInvoice">
+            <displayName>Date Invoice Updated</displayName>
+            <length>100</length>
+        </text>
+        <markup persistent="false" trackChanges="false" audited="false" usage="view" name="flowbar">
+            <displayName>Flowbar</displayName>
+        </markup>
+        <markup persistent="false" trackChanges="false" audited="false" usage="view" name="actionTemplate">
+            <displayName>Suggested Actions</displayName>
+        </markup>
+        <geometry persistent="false" trackChanges="false" audited="false" usage="view" name="accountLocation">
+            <displayName>Account Location</displayName>
+        </geometry>
+    </attributes>
+    <conditions>
+        <condition name="accountSelected">
+            <expression><![CDATA[account != null]]></expression>
+        </condition>
+        <condition name="uploadSelected">
+            <expression><![CDATA[getAccount() != null && getAccount().getInteractionType() != null && getAccount().getInteractionType().name() == "upload"]]></expression>
+        </condition>
+    </conditions>
+</document>
